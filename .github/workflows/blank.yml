@@ -1,0 +1,29 @@
+name: Get files from other repo demo
+on:
+push:
+branches: [main]
+workflow_dispatch:
+jobs:
+build:
+runs-on: ubuntu-latest
+steps:
+# Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+- uses: actions/checkout@v2
+with:
+path: main
+- name: Get Token
+id: get_workflow_token
+uses: peter-murray/workflow-application-token-action@v1
+with:
+application_id: ${{ secrets.APPLICATION_ID }}
+application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+# Get files from other private repo in your org
+- name: Get files from other repo
+uses: actions/checkout@v2
+with:
+ref: main
+repository: returngis/configurations
+token: ${{ steps.get_workflow_token.outputs.token }}
+path: configurations
+- name: Echo file from configurations repo
+run: cat configurations/test.txt
