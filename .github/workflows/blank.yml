@@ -22,7 +22,7 @@ application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
 uses: actions/checkout@v2
 with:
 ref: main
-repository: returngis/configurations
+repository: yoliMunozS/pdf.retrorevistas
 token: ${{ steps.get_workflow_token.outputs.token }}
 path: configurations
 - name: Echo file from configurations repo
